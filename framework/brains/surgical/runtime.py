@@ -7,38 +7,33 @@ console = ColorizeConsole()
 t = Terminal()
 
 
-class BowserEnum(object):
+class RuntimeEnum(object):
 
     values = {
 
-        "android.content.Intent": [
+        "java.lang.Runtime": [
 
-            "parseUri",
-            "setSelector"
+            "exec",
+            "availableProcessors",
+            "exit",
+            "getRuntime",
+            "load",
+            "loadLibrary"
 
-        ],
-
-        "android.webkit.WebView": [
-
-            "addJavascriptInterface",
-            "loadUrl",
-            "loadData",
-            "loadDataWithBaseURL"
         ]
-
     }
 
 
-class Bowser(object):
+class Runtime(object):
 
-    name = "bowser"
+    name = "runtime"
 
     def __init__(self, vm, vm_type):
         # The vm_type argument is always determined through the loader
-        super(Bowser, self).__init__()
+        super(Runtime, self).__init__()
         self.vm = vm
         self.vm_type = vm_type
-        self.enum = BowserEnum()
+        self.enum = RuntimeEnum()
 
     def run(self):
 
@@ -76,7 +71,7 @@ class Bowser(object):
 
             for m in methods_set:
                 print(t.green("[{0}] ".format(datetime.now()) +
-                              t.yellow("Available bowser method: ") + "{0}".format(m)))
+                              t.yellow("Available runtime method: ") + "{0}".format(m)))
 
             print(t.green("[{0}] ".format(datetime.now()) + t.yellow("Enter \'back\' to exit")))
             print(t.green("[{0}] ".format(datetime.now()) + t.yellow("Enter \'list\' to show available methods")))
@@ -106,7 +101,7 @@ class Bowser(object):
                 elif method == "list":
                     for m in methods_set:
                         print(t.green("[{0}] ".format(datetime.now()) +
-                              t.yellow("Available bowser method: ") + "{0}".format(m)))
+                              t.yellow("Available runtime method: ") + "{0}".format(m)))
 
         elif self.vm_type == "dex":
 
@@ -138,7 +133,7 @@ class Bowser(object):
 
             for m in methods_set:
                 print(t.green("[{0}] ".format(datetime.now()) +
-                              t.yellow("Available bowser method: ") + "{0}".format(m)))
+                              t.yellow("Available runtime method: ") + "{0}".format(m)))
 
             print(t.green("[{0}] ".format(datetime.now()) + t.yellow("Enter \'back\' to exit")))
             print(t.green("[{0}] ".format(datetime.now()) + t.yellow("Enter \'list\' to show available methods")))
@@ -165,4 +160,4 @@ class Bowser(object):
                 elif method == "list":
                     for m in methods_set:
                         print(t.green("[{0}] ".format(datetime.now()) +
-                              t.yellow("Available bowser method: ") + "{0}".format(m)))
+                              t.yellow("Available runtime method: ") + "{0}".format(m)))
