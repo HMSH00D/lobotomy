@@ -101,7 +101,12 @@ class Zip(object):
                                         if method.get_class_name() == p.get_src(_vm.get_class_manager())[0]:
                                             mx = x.get_method(method)
                                             d = decompile.DvMethod(mx)
-                                            d.process()
+                                            try:
+                                                d.process()
+                                            except Exception as decompile_process_error:
+                                                if decompile_process_error.message == \
+                                                        "'Instruction31c' object has no attribute 'get_raw_string'":
+                                                    pass
                                             _structure.append((c, method, d))
 
             methods = [s[0] for s in _structure]
@@ -160,7 +165,12 @@ class Zip(object):
                                         if method.get_class_name() == p.get_src(_vm.get_class_manager())[0]:
                                             mx = x.get_method(method)
                                             d = decompile.DvMethod(mx)
-                                            d.process()
+                                            try:
+                                                d.process()
+                                            except Exception as decompile_process_error:
+                                                if decompile_process_error.message == \
+                                                        "'Instruction31c' object has no attribute 'get_raw_string'":
+                                                    pass
                                             _structure.append((c, method, d))
 
             methods = [s[0] for s in _structure]
