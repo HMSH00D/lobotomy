@@ -38,6 +38,16 @@ class CryptoEnum(object):
             "getAlgorithm",
             "getInstance"
 
+        ],
+
+        "javax.crypto.Mac": [
+
+            "doFinal",
+            "getAlgorithm",
+            "getInstance",
+            "getProvider",
+            "getMacLength",
+            "update"
         ]
 
     }
