@@ -1,3 +1,4 @@
+import sys
 from datetime import datetime
 from cmd2 import Cmd as Lobotomy
 from blessings import Terminal
@@ -376,32 +377,36 @@ class Run(Lobotomy):
             print(t.red("[{0}] ".format(datetime.now()) + enum.IMPORT_ERROR_EXPLOIT))
             Logger.run_logger(e.message)
 
-    # Scalpel - Vulnerability Analysis (BETA)
-    # --------------------------------
-
     @staticmethod
     def do_scalpel(args):
         """
-        Description:
-        Requirements:
-        Usage:
+        Description: scalpel module
         """
-        if args:
-            if args == enum.SCALPEL_ARGS_START_SERVER:
-                print(t.green("[{0}] ".format(datetime.now()) +
-                              t.red(enum.SCAlPEL_BANNER) +
-                              t.yellow(enum.SCAlPEL_SERVER)))
+        if args.split()[0]:
+            if args.split()[0] == "run":
+                print(t.yellow("""
+
+                _            _
+               | |          | |
+  ___  ___ __ _| |_ __   ___| |
+ / __|/ __/ _` | | '_ \ / _ \ |
+ \__ \ (_| (_| | | |_) |  __/ |
+ |___/\___\__,_|_| .__/ \___|_|
+                 | |
+                 |_|
+
+                """))
                 try:
-                    from framework.brains.scalpel.server.scalpel_server import ScalpelServer
-                    global scalpel
-                    # Instantiate the ScalpelServer
-                    #
-                    scalpel = ScalpelServer()
-                    scalpel.run()
+                    from framework.brains.scalpel.commands.cmd import Run
+                    run = Run()
+                    run.prompt = t.yellow("(scalpel) ")
+                    run.ruler = t.yellow("-")
+                    run.cmdloop()
                 except ImportError as e:
                     print(t.red("[{0}] ".format(datetime.now()) + enum.IMPORT_ERROR_SCALPEL))
                     Logger.run_logger(e.message)
+                except KeyboardInterrupt:
+                    sys.exit(0)
         else:
             print(t.red("[{0}] ".format(datetime.now()) + enum.ARGUMENTS))
-
 
