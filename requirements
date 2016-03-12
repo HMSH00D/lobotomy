@@ -9,6 +9,4 @@ flask_bootstrap
 pygments
 qtconsole
 PySide
-
-
-
+netifaces

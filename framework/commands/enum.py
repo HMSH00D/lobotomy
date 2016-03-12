@@ -41,8 +41,33 @@ class CommandEnum(object):
     ATTACKSURFACE_MODULE_MESSAGE = "You cannot run the attacksurface module without a loaded APK"
     SURGICAL_MODULE_MESSAGE = "You cannot run the surgical module without a target executable"
     FRIDA_MODULE_MESSAGE = "You cannot run the frida module without a loaded APK"
-    # ------------------------------------------------
+    # SCALPEL ------------------------------------------------
     SCAlPEL_BANNER = "[Vulnerability Analysis Engine]"
     SCAlPEL_SERVER = "Scalpel server starting ... "
     SCALPEL_ARGS_START_SERVER = "start server"
+    # EXPLOIT API ------------------------------------------------
+
+    exploit_category_error = "Exploit category does not exist"
+    exploit_target_error = "Exploit target does not exist"
+    exploit_module_error = "Exploit module does not exist"
+
+    exploit_categories = [
+
+        "browser"
+    ]
+
+    exploit_modules = {
+
+        "browser": [
+
+                ("mercury", "wfm")
+
+
+        ]
+    }
+
+    exploits = {
+
+        "EXPLOIT_BROWSER_MERCURY_WFM": "browser mercury wfm"
+    }
 

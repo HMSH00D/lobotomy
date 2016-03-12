@@ -363,18 +363,46 @@ class Run(Lobotomy):
 
         Requirements: Loaded APK
 
-        Usage: [exploit] & [type] & [name] [module] - Example: exploit browser mercury wfm
+        Usage: exploit & [type] & [name] & [module] - Example: exploit browser mercury wfm
         """
         try:
             from framework.brains.exploits.api import ExploitAPI
+            if args.split()[0] and args.split()[0] == "list":
+                for k, v in enum.exploits.items():
+                    print(t.green("[{0}] ".format(datetime.now()) + t.yellow(v)))
+                    return
+            # TODO
+            # This check could probably be improved
             if args.split()[0] and args.split()[1] and args.split()[2]:
-                # Instantiate exploitAPI
-                #
-                ExploitAPI(exploit=args.split()[0], name=args.split()[1], module=args.split()[2])
+                for c in enum.exploit_categories:
+                    if args.split()[0] == c:
+                        for a, b in enum.exploit_modules.items():
+                            if a == c:
+                                for i, (d, e) in enumerate(b):
+                                    if args.split()[1] == d and args.split()[2] == e:
+                                        # Instantiate exploitAPI
+                                        ExploitAPI(exploit=args.split()[0],
+                                                   name=args.split()[1],
+                                                   module=args.split()[2])
+                                    else:
+                                        print(t.red("[{0}] ".format(datetime.now()) +
+                                                    t.white(enum.exploit_module_error)))
+                                        return
+                            else:
+                                print(t.red("[{0}] ".format(datetime.now()) +
+                                            t.white(enum.exploit_target_error)))
+                                return
+                    else:
+                        print(t.red("[{0}] ".format(datetime.now()) +
+                                    t.white(enum.exploit_category_error)))
+                        return
             else:
-                print(t.red("[{0}] ".format(datetime.now()) + enum.ARGUMENTS))
+                print(t.red("[{0}] ".format(datetime.now()) + t.white(enum.ARGUMENTS)))
         except ImportError as e:
-            print(t.red("[{0}] ".format(datetime.now()) + enum.IMPORT_ERROR_EXPLOIT))
+            print(t.red("[{0}] ".format(datetime.now()) + t.white(enum.IMPORT_ERROR_EXPLOIT)))
+            Logger.run_logger(e.message)
+        except IndexError as e:
+            print(t.red("[{0}] ".format(datetime.now()) + t.white(enum.ARGUMENTS)))
             Logger.run_logger(e.message)
 
     @staticmethod

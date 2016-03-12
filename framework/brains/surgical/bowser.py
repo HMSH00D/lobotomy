@@ -22,8 +22,8 @@ class BowserEnum(object):
 
             "addJavascriptInterface",
             "loadUrl",
-            "loadData",
-            "loadDataWithBaseURL"
+            "loadDataWithBaseURL",
+            "loadData"
         ]
 
     }
