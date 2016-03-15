@@ -38,24 +38,17 @@ class Debuggable(object):
 
             with open("output/{0}/AndroidManifest.xml".format(self.directory), "r+") as manifest:
                 # Read in the AndroidManifest.xml
-                #
                 xml = minidom.parseString(manifest.read())
                 # Get the <application/> tag element
-                #
                 application = xml.getElementsByTagName("application")
-                # Set the debuggable attribute within the
-                # application tag element
-                #
+                # Set the debuggable attribute within the application tag element
                 application[0].setAttribute("android:debuggable", "true")
                 # Write and close the modified XML
-                #
                 manifest.seek(0)
                 xml.writexml(manifest)
                 manifest.truncate()
                 manifest.close()
-        # Exception handlers
-        # for I/O, OS, and DOM issues
-        #
+        # Exception handlers for I/O, OS, and DOM issues
         except OSError as e:
             print(t.red("[{0}]".format(datetime.now()) + enum.DEBUGGABLE_PROCESS_EXCEPTION))
             Logger.run_logger(e.message)
@@ -77,10 +70,11 @@ class Debuggable(object):
             print(t.green("[{0}] ".format(datetime.now())) + t.yellow(enum.DEBUGGABLE_BUILD_COMPLETE))
             print(t.green("[{0}] ".format(datetime.now())) + t.yellow(enum.DEBUGGABLE_APK_SIGNING))
 
+            # Generate a new signing key
             Popen(["keytool -genkey -v -keystore lobotomy-key.keystore "
                    "-alias lobotomy -keyalg RSA -keysize 2048 -validity 10000"],
                   shell=True).wait()
-
+            # Sign target APK with the generated signing key
             Popen(["jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 "
                    "-keystore lobotomy-key.keystore output/{0}/{0}.apk lobotomy".format(self.directory)],
                   shell=True).wait()
@@ -88,14 +82,9 @@ class Debuggable(object):
             print(t.green("[{0}] ".format(datetime.now())) + t.yellow("Freshly signed APK is located at : ") +
                   "output/{0}/{0}.apk".format(self.directory))
 
-            # We want to create a fresh keystore
-            # every time we build and sign a new APK
-            #
+            # We want to create a fresh keystore every time we build and sign a new APK
             Popen(["rm lobotomy-key.keystore"], shell=True).wait()
-        # Exception handler
-        # for process exception
-        # issues
-        #
+        # Exception handler for process exception issues
         except OSError as e:
             print(t.red("[{0}]".format(datetime.now()) + enum.DEBUGGABLE_PROCESS_EXCEPTION))
             Logger.run_logger(e.message)
