@@ -1,6 +1,6 @@
 ### Attention
 
-Lobtomy will be closed sourced within the next thirty days.  LifeForm Labs will leave the 1.2 release for those to freely download, but all future developments to Lobotomy will effectively not be open source and under a new license.  We will update all of Lobotomy's fans soon with updates about the direction.
+Lobtomy will be closed sourced within the next thirty days.  LifeForm Labs will leave the 1.2 release for those to freely download, but all future development efforts will effectively be closed source and under a new license.  We will update all of Lobotomy's fans soon with updates about the new direction.
 
 ---
 # Lobotomy
