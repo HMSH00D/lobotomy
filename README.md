@@ -1,3 +1,7 @@
+### Attention
+
+Lobtomy will be closed sourced within the next thirty days.
+
 # Lobotomy
 ```
                   :                   :                  :
