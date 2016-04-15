@@ -1,8 +1,3 @@
-### Attention
-
-**Lobotomy** will be closed sourced within the next thirty days. LifeForm Labs will update all of **Lobotomy's** fans soon about the commerical direction of the toolkit.
-
----
 # Lobotomy
 ```
                   :                   :                  :
