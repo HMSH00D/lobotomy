@@ -21,72 +21,52 @@ class AttackSurface(object):
         build the attacksurface for the target APK
         """
 
-        # Get all the elements within
-        # the xml object
-        #
+        # Get all the elements within the xml object
         try:
             # Activities
-            #
             if component == "activity":
-
-                # Get all the
-                # tag elements
-                #
+                # Get all the tag elements
                 activities = xml.getElementsByTagName("activity")
-
                 for activity in activities:
-
                     if activity.getAttribute("android:name") == name \
                             or activity.getAttribute("android:name").split(".")[-1] == name.split(".")[-1]:
 
                         # Enumerate exported Activities
-                        #
                         if activity.getAttribute("android:exported"):
-
                             if activity.getAttribute("android:exported") == "true":
                                 print(t.green("[{0}] ".format(datetime.now()) +
                                               t.yellow("{0} : ".format(name)) +
                                               t.cyan("Found exported activity!")))
-
                                 print(t.green("[{0}] ".format(datetime.now()) +
                                               t.yellow("{0} : exported : ".format(name)) +
                                               "{0}".format(activity.getAttribute("android:exported"))))
 
-                        # Enumerate Activities
-                        # with taskAffinity
-                        #
+                        # Enumerate Activities with taskAffinity
                         if activity.getAttribute("android:taskAffinity"):
                             print(t.green("[{0}]".format(datetime.now()) +
                                           t.yellow(" {0} : ".format(name)) +
                                           t.cyan("Found Activity with taskAffinity!")))
-
                             print(t.green("[{0}] ".format(datetime.now()) +
                                           t.yellow("{0} : taskAffinity : ".format(name)) +
                                           "{0}".format(activity.getAttribute("android:taskAffinity"))))
 
-                        # Enumerate Activities
-                        # with launchMode
-                        #
+                        # Enumerate Activities with launchMode
                         if activity.getAttribute("android:launchMode"):
                             print(t.green("[{0}]".format(datetime.now()) +
                                           t.yellow(" {0} : ".format(name)) +
                                           t.cyan("Found Activity with launchMode!")))
-
                             if activity.getAttribute("android:launchMode") == "0":
                                 print(t.green("[{0}] ".format(datetime.now()) +
                                               t.yellow("{0} : launchMode : ".format(name)) +
                                               "multiple"))
-
                             elif activity.getAttribute("android:launchMode") == "1":
                                 print(t.green("[{0}] ".format(datetime.now()) +
                                               t.yellow("{0} : launchMode : ".format(name)) +
                                               "singleTop"))
-
                             elif activity.getAttribute("android:launchMode") == "2":
                                 print(t.green("[{0}] ".format(datetime.now()) +
                                               t.yellow("{0} : launchMode : ".format(name)) +
                                               "singleTask"))
-
                             elif activity.getAttribute("android:launchMode") == "3":
                                 print(t.green("[{0}] ".format(datetime.now()) +
                                               t.yellow("{0} : launchMode : ".format(name)) +
@@ -95,9 +75,7 @@ class AttackSurface(object):
                         intents = activity.getElementsByTagName("intent-filter")
                         schemes = list()
 
-                        # Enumerate data
-                        # schemes
-                        #
+                        # Enumerate data schemes
                         if intents:
                             for intent in intents:
                                 data = intent.getElementsByTagName("data")
@@ -107,28 +85,21 @@ class AttackSurface(object):
                                             schemes.append(d.getAttribute("android:scheme"))
 
                             # Remove duplicate schemes
-                            #
                             results = list(set(schemes))
 
                             if results:
                                 print(t.green("[{0}]".format(datetime.now()) +
                                               t.yellow(" {0} : ".format(name)) +
                                               t.cyan("Found Activity with schemes!")))
-
                                 for r in results:
                                     print(t.green("[{0}] ".format(datetime.now()) +
                                                   t.yellow("{0} : ".format(name)) +
                                                   t.yellow("scheme : ") + "{0}".format(r)))
 
             # Receivers
-            #
             elif component == "receiver":
-
-                # Get all the
-                # tag elements
-                #
+                # Get all the tag elements
                 receivers = xml.getElementsByTagName("receiver")
-
                 for receiver in receivers:
                     if receiver.getAttribute("android:name") == name \
                             or receiver.getAttribute("android:name").split(".")[-1] == name.split(".")[-1]:
@@ -143,9 +114,8 @@ class AttackSurface(object):
                                               "{0}".format(receiver.getAttribute("android:exported"))))
 
             elif component == "provider":
-
+                # Get all the tag elements
                 providers = xml.getElementsByTagName("provider")
-
                 for provider in providers:
                     if provider.getAttribute("android:name") == name \
                             or provider.getAttribute("android:name").split(".")[-1] == name.split(".")[-1]:
@@ -154,33 +124,36 @@ class AttackSurface(object):
                                 print(t.green("[{0}] ".format(datetime.now()) +
                                               t.yellow("{0} : ".format(name)) +
                                               t.cyan("Found exported provided!")))
-
                                 print(t.green("[{0}] ".format(datetime.now()) +
                                               t.yellow("{0} : exported : ".format(name)) +
                                               "{0}".format(provider.getAttribute("android:exported"))))
 
             elif component == "service":
-
+                # Get all the tag elements
                 services = xml.getElementsByTagName("service")
-
                 for service in services:
                     if service.getAttribute("android:name") == name \
                             or service.getAttribute("android:name").split(".")[-1] == name.split(".")[-1]:
-
                         if service.getAttribute("android:exported"):
                             if service.getAttribute("android:exported") == "true":
                                 print(t.green("[{0}] ".format(datetime.now()) +
                                               t.yellow("{0} : ".format(name)) +
                                               t.cyan("Found exported service!")))
-
                                 print(t.green("[{0}] ".format(datetime.now()) +
                                               t.yellow("{0} : exported : ".format(name)) +
                                               "{0}".format(service.getAttribute("android:exported"))))
-
                             if service.getAttribute("android:process"):
                                 print(t.green("[{0}] ".format(datetime.now()) +
                                               t.yellow("{0} : process : ".format(name)) +
                                               "{0}".format(service.getAttribute("android:process"))))
+                            if service.getAttribute("android:permission"):
+                                print(t.green("[{0}] ".format(datetime.now()) +
+                                              t.yellow("{0} : ".format(name)) +
+                                              t.red("Found permission on component!")))
+                                print(t.green("[{0}] ".format(datetime.now()) +
+                                              t.yellow("{0} : permission : ".format(name)) +
+                                              "{0}".format(service.getAttribute("android:permission"))))
+
 
         except DOMException as e:
             print(t.red("[{0}]".format(datetime.now()) + "XML exception, check the logs"))
@@ -193,7 +166,6 @@ class AttackSurface(object):
         """
 
         # Grab lists for components
-        #
         activities = self.apk.get_activities()
         receivers = self.apk.get_receivers()
         providers = self.apk.get_providers()
@@ -204,7 +176,6 @@ class AttackSurface(object):
         print(t.green("[{0}] ".format(datetime.now()) + t.yellow("---------")))
 
         # Enumerate activities
-        #
         for activity in activities:
             self.run_parse_xml(self.apk.get_AndroidManifest(), "activity", activity)
             filters = self.apk.get_intent_filters("activity", activity)
@@ -225,7 +196,6 @@ class AttackSurface(object):
         print(t.green("[{0}] ".format(datetime.now()) + t.yellow("---------")))
 
         # Enumerate receivers
-        #
         for receiver in receivers:
             self.run_parse_xml(self.apk.get_AndroidManifest(), "receiver", receiver)
             filters = self.apk.get_intent_filters("receiver", receiver)
@@ -246,7 +216,6 @@ class AttackSurface(object):
         print(t.green("[{0}] ".format(datetime.now()) + t.yellow("---------")))
 
         # Enumerate providers
-        #
         for provider in providers:
             self.run_parse_xml(self.apk.get_AndroidManifest(), "provider", provider)
             filters = self.apk.get_intent_filters("provider", provider)
@@ -267,7 +236,6 @@ class AttackSurface(object):
         print(t.green("[{0}] ".format(datetime.now()) + t.yellow("---------")))
 
         # Enumerate services
-        #
         for service in services:
             self.run_parse_xml(self.apk.get_AndroidManifest(), "service", service)
             filters = self.apk.get_intent_filters("service", services)

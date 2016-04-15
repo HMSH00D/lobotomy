@@ -115,10 +115,14 @@ class Socket(object):
                                 for method in self.vm.get_methods():
                                     if method.get_name() == p.get_src(_vm.get_class_manager())[1]:
                                         if method.get_class_name() == p.get_src(_vm.get_class_manager())[0]:
-
                                             mx = x.get_method(method)
                                             d = decompile.DvMethod(mx)
-                                            d.process()
+                                            try:
+                                                d.process()
+                                            except Exception as decompile_process_error:
+                                                if decompile_process_error.message == \
+                                                        "'Instruction31c' object has no attribute 'get_raw_string'":
+                                                    pass
                                             _structure.append((c, method, d))
 
             methods = [s[0] for s in _structure]
@@ -126,13 +130,13 @@ class Socket(object):
 
             for m in methods_set:
                 print(t.green("[{0}] ".format(datetime.now()) +
-                              t.yellow("Available logging methods: ") + "{0}".format(m)))
+                              t.yellow("Available socket method: ") + "{0}".format(m)))
 
             print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'back\' to exit")))
+                          t.white("Enter \'back\' to exit")))
 
             print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'list\' to show available methods")))
+                          t.white("Enter \'list\' to show available methods")))
 
             while True:
 
@@ -157,7 +161,7 @@ class Socket(object):
                 elif method == "list":
                     for m in methods_set:
                         print(t.green("[{0}] ".format(datetime.now()) +
-                              t.yellow("Available socket methods: ") + "{0}".format(m)))
+                              t.yellow("Available socket method: ") + "{0}".format(m)))
 
         elif self.vm_type == "dex":
 
@@ -177,10 +181,14 @@ class Socket(object):
                                 for method in self.vm.get_methods():
                                     if method.get_name() == p.get_src(_vm.get_class_manager())[1]:
                                         if method.get_class_name() == p.get_src(_vm.get_class_manager())[0]:
-
                                             mx = x.get_method(method)
                                             d = decompile.DvMethod(mx)
-                                            d.process()
+                                            try:
+                                                d.process()
+                                            except Exception as decompile_process_error:
+                                                if decompile_process_error.message == \
+                                                        "'Instruction31c' object has no attribute 'get_raw_string'":
+                                                    pass
                                             _structure.append((c, method, d))
 
             methods = [s[0] for s in _structure]
@@ -191,10 +199,10 @@ class Socket(object):
                               t.yellow("Available socket methods: ") + "{0}".format(m)))
 
             print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'back\' to exit")))
+                          t.white("Enter \'back\' to exit")))
 
             print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'list\' to show available methods")))
+                          t.white("Enter \'list\' to show available methods")))
 
             while True:
 

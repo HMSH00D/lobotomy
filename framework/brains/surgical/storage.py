@@ -61,10 +61,14 @@ class InsecureStorage(object):
                                 for method in self.vm.get_methods():
                                     if method.get_name() == p.get_src(_vm.get_class_manager())[1]:
                                         if method.get_class_name() == p.get_src(_vm.get_class_manager())[0]:
-
                                             mx = x.get_method(method)
                                             d = decompile.DvMethod(mx)
-                                            d.process()
+                                            try:
+                                                d.process()
+                                            except Exception as decompile_process_error:
+                                                if decompile_process_error.message == \
+                                                        "'Instruction31c' object has no attribute 'get_raw_string'":
+                                                    pass
                                             _structure.append((c, method, d))
 
             methods = [s[0] for s in _structure]
@@ -74,11 +78,8 @@ class InsecureStorage(object):
                 print(t.green("[{0}] ".format(datetime.now()) +
                               t.yellow("Available storage methods: ") + "{0}".format(m)))
 
-            print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'back\' to exit")))
-
-            print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'list\' to show available methods")))
+            print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'back\' to exit")))
+            print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'list\' to show available methods")))
 
             while True:
 
@@ -121,10 +122,14 @@ class InsecureStorage(object):
                                 for method in self.vm.get_methods():
                                     if method.get_name() == p.get_src(_vm.get_class_manager())[1]:
                                         if method.get_class_name() == p.get_src(_vm.get_class_manager())[0]:
-
                                             mx = x.get_method(method)
                                             d = decompile.DvMethod(mx)
-                                            d.process()
+                                            try:
+                                                d.process()
+                                            except Exception as decompile_process_error:
+                                                if decompile_process_error.message == \
+                                                        "'Instruction31c' object has no attribute 'get_raw_string'":
+                                                    pass
                                             _structure.append((c, method, d))
 
             methods = [s[0] for s in _structure]
@@ -134,11 +139,8 @@ class InsecureStorage(object):
                 print(t.green("[{0}] ".format(datetime.now()) +
                               t.yellow("Available storage methods: ") + "{0}".format(m)))
 
-            print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'back\' to exit")))
-
-            print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'list\' to show available methods")))
+            print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'back\' to exit")))
+            print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'list\' to show available methods")))
 
             while True:
 

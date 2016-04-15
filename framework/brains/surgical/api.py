@@ -93,8 +93,8 @@ class SurgicalAPI(object):
             print(t.green("[{0}] ".format(datetime.now())) +
                   m.__getattribute__("name"))
 
-        print(t.green("[{0}] ".format(datetime.now()) + t.yellow("Enter \'quit\' to exit")))
-        print(t.green("[{0}] ".format(datetime.now()) + t.yellow("Enter \'list\' to show available modules")))
+        print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'quit\' to exit")))
+        print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'list\' to show available modules")))
 
         while True:
             # Assign target API function
@@ -104,6 +104,10 @@ class SurgicalAPI(object):
                 for m in self.modules:
                     print(t.green("[{0}] ".format(datetime.now())) +
                           m.__getattribute__("name"))
+
+                print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'quit\' to exit")))
+                print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'list\' to show available modules")))
+
             if module == "quit":
                 break
             # Match on Class attribute and call run() function of target class
@@ -111,3 +115,5 @@ class SurgicalAPI(object):
                 if module == m.__getattribute__("name"):
                     # Run target module
                     m.run()
+                    print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'quit\' to exit")))
+                    print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'list\' to show available modules")))

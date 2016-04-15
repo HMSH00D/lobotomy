@@ -78,8 +78,8 @@ class Bowser(object):
                 print(t.green("[{0}] ".format(datetime.now()) +
                               t.yellow("Available bowser method: ") + "{0}".format(m)))
 
-            print(t.green("[{0}] ".format(datetime.now()) + t.yellow("Enter \'back\' to exit")))
-            print(t.green("[{0}] ".format(datetime.now()) + t.yellow("Enter \'list\' to show available methods")))
+                print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'back\' to exit")))
+                print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'list\' to show available methods")))
 
             while True:
                 method = raw_input(t.green("[{0}] ".format(datetime.now()) + t.yellow("Enter method selection: ")))
@@ -140,8 +140,8 @@ class Bowser(object):
                 print(t.green("[{0}] ".format(datetime.now()) +
                               t.yellow("Available bowser method: ") + "{0}".format(m)))
 
-            print(t.green("[{0}] ".format(datetime.now()) + t.yellow("Enter \'back\' to exit")))
-            print(t.green("[{0}] ".format(datetime.now()) + t.yellow("Enter \'list\' to show available methods")))
+            print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'back\' to exit")))
+            print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'list\' to show available methods")))
 
             while True:
                 method = raw_input(t.green("[{0}] ".format(datetime.now()) + t.yellow("Enter method selection: ")))

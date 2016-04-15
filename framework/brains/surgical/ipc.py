@@ -76,7 +76,18 @@ class IPCEnum(object):
 
             [
 
-                "onReceive"
+                "onReceive",
+                "getResultData",
+                "getResultExtras",
+                "peekService"
+
+            ],
+
+        "android.support.v4.content.WakefulBroadcastReceiver":
+
+            [
+                "completeWakefulIntent",
+                "startWakefulService"
 
             ],
 
@@ -139,7 +150,8 @@ class IPC(object):
 
                 "activity",
                 "intent",
-                "receiver",
+                "broadcastreceiver",
+                "wakefulbroadcastreceiver"
                 "context",
                 "service"
 
@@ -152,22 +164,28 @@ class IPC(object):
                 print(t.green("[{0}] ".format(datetime.now())) + "{0}".format(s))
 
             selection = raw_input(t.green("[{0}] ".format(datetime.now()) + t.yellow("Enter selection: ")))
-
             _structure = list()
 
-            for a, b in self.enum.values.items():
-                if selection in a.lower():
-                    for c in b:
-                        paths = x.get_tainted_packages().search_methods("{0}".format(a), "{0}".format(c), ".")
-                        if paths:
-                            for p in paths:
-                                for method in self.vm.get_methods():
-                                    if method.get_name() == p.get_src(_vm.get_class_manager())[1]:
-                                        if method.get_class_name() == p.get_src(_vm.get_class_manager())[0]:
-                                            mx = x.get_method(method)
-                                            d = decompile.DvMethod(mx)
-                                            d.process()
-                                            _structure.append((c, method, d))
+            if x:
+                print(t.green("[{0}] ".format(datetime.now()) + t.yellow("Performing surgery ...")))
+                for a, b in self.enum.values.items():
+                    if selection in a.lower():
+                        for c in b:
+                            paths = x.get_tainted_packages().search_methods("{0}".format(a), "{0}".format(c), ".")
+                            if paths:
+                                for p in paths:
+                                    for method in self.vm.get_methods():
+                                        if method.get_name() == p.get_src(_vm.get_class_manager())[1]:
+                                            if method.get_class_name() == p.get_src(_vm.get_class_manager())[0]:
+                                                mx = x.get_method(method)
+                                                d = decompile.DvMethod(mx)
+                                                try:
+                                                    d.process()
+                                                except Exception as decompile_process_error:
+                                                    if decompile_process_error.message == \
+                                                            "'Instruction31c' object has no attribute 'get_raw_string'":
+                                                        pass
+                                                _structure.append((c, method, d))
 
             methods = [s[0] for s in _structure]
             methods_set = set(methods)
@@ -176,11 +194,8 @@ class IPC(object):
                 print(t.green("[{0}] ".format(datetime.now()) +
                               t.yellow("Available {0} methods: ".format(selection)) + "{0}".format(m)))
 
-            print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'back\' to exit")))
-
-            print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'list\' to show available methods")))
+            print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'back\' to exit")))
+            print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'list\' to show available methods")))
 
             while True:
 
@@ -217,7 +232,8 @@ class IPC(object):
 
                 "activity",
                 "intent",
-                "receiver",
+                "broadcastreceiver",
+                "wakefulbroadcastreceiver"
                 "context",
                 "service"
 
@@ -242,7 +258,12 @@ class IPC(object):
                                         if method.get_class_name() == p.get_src(_vm.get_class_manager())[0]:
                                             mx = x.get_method(method)
                                             d = decompile.DvMethod(mx)
-                                            d.process()
+                                            try:
+                                                d.process()
+                                            except Exception as decompile_process_error:
+                                                if decompile_process_error.message == \
+                                                        "'Instruction31c' object has no attribute 'get_raw_string'":
+                                                    pass
                                             _structure.append((c, method, d))
 
             methods = [s[0] for s in _structure]
@@ -252,11 +273,8 @@ class IPC(object):
                 print(t.green("[{0}] ".format(datetime.now()) +
                               t.yellow("Available {0} methods: ".format(selection)) + "{0}".format(m)))
 
-            print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'back\' to exit")))
-
-            print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'list\' to show available methods")))
+            print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'back\' to exit")))
+            print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'list\' to show available methods")))
 
             while True:
 

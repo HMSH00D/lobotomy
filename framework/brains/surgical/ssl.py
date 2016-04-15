@@ -111,7 +111,12 @@ class SSL(object):
                                             # Start decompilation process for each method
                                             mx = x.get_method(method)
                                             d = decompile.DvMethod(mx)
-                                            d.process()
+                                            try:
+                                                d.process()
+                                            except Exception as decompile_process_error:
+                                                if decompile_process_error.message == \
+                                                        "'Instruction31c' object has no attribute 'get_raw_string'":
+                                                    pass
                                             _structure.append((c, method, d))
             # Iterate through the generated methods and
             # create a unique set
@@ -122,11 +127,8 @@ class SSL(object):
                 print(t.green("[{0}] ".format(datetime.now()) +
                               t.yellow("Available ssl methods: ") + "{0}".format(m)))
 
-            print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'back\' to exit")))
-
-            print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'list\' to show available functions")))
+            print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'back\' to exit")))
+            print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'list\' to show available methods")))
 
             while True:
                 # Selected target method
@@ -173,7 +175,12 @@ class SSL(object):
                                             # Start decompilation process for each method
                                             mx = x.get_method(method)
                                             d = decompile.DvMethod(mx)
-                                            d.process()
+                                            try:
+                                                d.process()
+                                            except Exception as decompile_process_error:
+                                                if decompile_process_error.message == \
+                                                        "'Instruction31c' object has no attribute 'get_raw_string'":
+                                                    pass
                                             _structure.append((c, method, d))
             # Iterate through the generated methods and
             # create a unique set
@@ -184,11 +191,8 @@ class SSL(object):
                 print(t.green("[{0}] ".format(datetime.now()) +
                               t.yellow("Available ssl methods: ") + "{0}".format(m)))
 
-            print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'back\' to exit")))
-
-            print(t.green("[{0}] ".format(datetime.now()) +
-                          t.yellow("Enter \'list\' to show available functions")))
+            print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'back\' to exit")))
+            print(t.green("[{0}] ".format(datetime.now()) + t.white("Enter \'list\' to show available methods")))
 
             while True:
                 # Selected target method

