@@ -36,9 +36,7 @@ Lobotomy was built upon Homebrew's Python, and has been validated against versio
 - **2.7.10** 
 - **2.7.11**
 
-For Lobotomy to properly implement its dependencies, a Homebrew installation of Python is required for OS X and [LinuxBrew](http://linuxbrew.sh/) for Linux distributions.  
-
-**(!)** The ```PYTHONPATH``` must then be pointed to the Homebrew's linked installation of Python.
+For Lobotomy to properly implement its dependencies, a [Homebrew](http://brew.sh/) installation of Python is required for OS X and [Linuxbrew](http://linuxbrew.sh/) for Linux distributions.  Your ```PYTHONPATH``` must then be pointed to the Homebrew's or LinuxBrew's linked installation of Python.
 
 Building the **apktool** requires Java and has been validated against the following versions:  
 
