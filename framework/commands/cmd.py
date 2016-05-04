@@ -335,7 +335,6 @@ class Run(Lobotomy):
             from framework.brains.surgical.api import SurgicalAPI
             if globals()["apks"] is not None:
                 # Instantiate surgicalAPI
-                #
                 s = SurgicalAPI(globals()["apks"], "apks")
                 s.run_surgical()
             elif globals()["dex"] is not None:

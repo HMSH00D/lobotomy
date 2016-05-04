@@ -18,7 +18,7 @@ def intent_service():
             </head>
             <body>
                 <script>
-                    location.href="intent://#Intent;SEL;component=com.amazon.dcp/.framework.DashboardActivity;action=com.amazon.dcp.ota.START_STATUS_TOOL;category=android.intent.category.DEFAULT;end";
+                    location.href="intent://#Intent;scheme=intent;SEL;component=com.lge.browser.main/.BrowserHelpActivity;action=android.intent.action.VIEW;end";
                 </script>
             </body>
         </html>

@@ -1,0 +1,171 @@
+from framework.brains.colorize.console import ColorizeConsole
+from androguard.core.analysis import analysis
+from androguard.decompiler.dad import decompile
+from datetime import datetime
+from blessings import Terminal
+console = ColorizeConsole()
+t = Terminal()
+
+
+class SerializationEnum(object):
+
+    values = {
+
+        "java.io.ObjectInputStream": [
+
+            "defaultReadObject",
+            "read",
+            "readByte",
+            "readObject"
+
+        ]
+
+    }
+
+
+class Serialization(object):
+
+    name = "serialization"
+
+    def __init__(self, vm, vm_type):
+
+        super(Serialization, self).__init__()
+        self.vm = vm
+        self.vm_type = vm_type
+        self.enum = SerializationEnum()
+
+    def run(self):
+
+        """
+        Search for socket service API implementations
+        """
+
+        if self.vm_type == "apks":
+
+            x = analysis.uVMAnalysis(self.vm.get_vm())
+            _vm = self.vm.get_vm()
+            _structure = list()
+
+            if x:
+                print(t.green("[{0}] ".format(datetime.now()) + t.yellow("Performing surgery ...")))
+                for a, b in self.enum.values.items():
+                    for c in b:
+                        paths = x.get_tainted_packages().search_methods("{0}".format(a), "{0}".format(c), ".")
+                        if paths:
+                            for p in paths:
+                                for method in self.vm.get_methods():
+                                    if method.get_name() == p.get_src(_vm.get_class_manager())[1]:
+                                        if method.get_class_name() == p.get_src(_vm.get_class_manager())[0]:
+                                            mx = x.get_method(method)
+                                            d = decompile.DvMethod(mx)
+                                            try:
+                                                d.process()
+                                            except Exception as decompile_process_error:
+                                                if decompile_process_error.message == \
+                                                        "'Instruction31c' object has no attribute 'get_raw_string'":
+                                                    pass
+                                            _structure.append((c, method, d))
+
+            methods = [s[0] for s in _structure]
+            methods_set = set(methods)
+
+            for m in methods_set:
+                print(t.green("[{0}] ".format(datetime.now()) +
+                              t.yellow("Available serialization method: ") + "{0}".format(m)))
+
+            print(t.green("[{0}] ".format(datetime.now()) +
+                          t.white("Enter \'back\' to exit")))
+
+            print(t.green("[{0}] ".format(datetime.now()) +
+                          t.white("Enter \'list\' to show available methods")))
+
+            while True:
+
+                method = raw_input(t.green("[{0}] ".format(datetime.now()) + t.yellow("Enter method selection: ")))
+
+                for s in _structure:
+                    if method == s[0]:
+                        print(t.green("[{0}] ".format(datetime.now()) +
+                                      t.yellow("Found: ") +
+                                      "{0}".format(s[0])))
+                        print(t.green("[{0}] ".format(datetime.now()) +
+                                      t.yellow("Class: ") +
+                                      "{0}".format(s[1].get_class_name())))
+                        print(t.green("[{0}] ".format(datetime.now()) +
+                                      t.yellow("Method: ") +
+                                      "{0}".format(s[1].get_name())))
+                        print(s[1].show())
+                        console.colorize_decompiled_method(str(s[2].get_source()))
+
+                if method == "back":
+                    break
+                elif method == "list":
+                    for m in methods_set:
+                        print(t.green("[{0}] ".format(datetime.now()) +
+                              t.yellow("Available serialization method: ") + "{0}".format(m)))
+
+        elif self.vm_type == "dex":
+
+            x = analysis.uVMAnalysis(self.vm)
+            _vm = self.vm
+            _structure = list()
+
+            if x:
+                print(t.green("[{0}] ".format(datetime.now()) + t.yellow("Performing surgery ...")))
+                # Get enum values
+                #
+                for a, b in self.enum.values.items():
+                    for c in b:
+                        paths = x.get_tainted_packages().search_methods("{0}".format(a), "{0}".format(c), ".")
+                        if paths:
+                            for p in paths:
+                                for method in self.vm.get_methods():
+                                    if method.get_name() == p.get_src(_vm.get_class_manager())[1]:
+                                        if method.get_class_name() == p.get_src(_vm.get_class_manager())[0]:
+                                            mx = x.get_method(method)
+                                            d = decompile.DvMethod(mx)
+                                            try:
+                                                d.process()
+                                            except Exception as decompile_process_error:
+                                                if decompile_process_error.message == \
+                                                        "'Instruction31c' object has no attribute 'get_raw_string'":
+                                                    pass
+                                            _structure.append((c, method, d))
+
+            methods = [s[0] for s in _structure]
+            methods_set = set(methods)
+
+            for m in methods_set:
+                print(t.green("[{0}] ".format(datetime.now()) +
+                              t.yellow("Available serialization methods: ") + "{0}".format(m)))
+
+            print(t.green("[{0}] ".format(datetime.now()) +
+                          t.white("Enter \'back\' to exit")))
+
+            print(t.green("[{0}] ".format(datetime.now()) +
+                          t.white("Enter \'list\' to show available methods")))
+
+            while True:
+
+                method = raw_input(t.green("[{0}] ".format(datetime.now()) + t.yellow("Enter method selection: ")))
+
+                for s in _structure:
+                    if method == s[0]:
+                        print(t.green("[{0}] ".format(datetime.now()) +
+                                      t.yellow("Found: ") +
+                                      "{0}".format(s[0])))
+                        print(t.green("[{0}] ".format(datetime.now()) +
+                                      t.yellow("Class: ") +
+                                      "{0}".format(s[1].get_class_name())))
+                        print(t.green("[{0}] ".format(datetime.now()) +
+                                      t.yellow("Method: ") +
+                                      "{0}".format(s[1].get_name())))
+                        print(s[1].show())
+                        console.colorize_decompiled_method(str(s[2].get_source()))
+
+                if method == "back":
+                    break
+                elif method == "list":
+                    for m in methods_set:
+                        print(t.green("[{0}] ".format(datetime.now()) +
+                              t.yellow("Available serialization methods: ") + "{0}".format(m)))

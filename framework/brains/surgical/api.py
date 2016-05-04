@@ -11,6 +11,7 @@ from framework.brains.surgical.clipboard import ClipBoard
 from framework.brains.surgical.bowser import Bowser
 from framework.brains.surgical.hash import Hash
 from framework.brains.surgical.runtime import Runtime
+from framework.brains.surgical.serialization import Serialization
 from datetime import datetime
 from blessings import Terminal
 t = Terminal()
@@ -37,6 +38,7 @@ class SurgicalAPI(object):
             self.bowser = Bowser(self.apks, vm_type)
             self.hash = Hash(self.apks, vm_type)
             self.runtime = Runtime(self.apks, vm_type)
+            self.serialization = Serialization(self.apks, vm_type)
             self.modules = [f for f in self.storage,
                             self.crypto,
                             self.logging,
@@ -49,7 +51,8 @@ class SurgicalAPI(object):
                             self.clipboard,
                             self.bowser,
                             self.hash,
-                            self.runtime
+                            self.runtime,
+                            self.serialization
                             ]
 
         elif vm_type == "dex":
@@ -67,6 +70,7 @@ class SurgicalAPI(object):
             self.bowser = Bowser(self.dex, vm_type)
             self.hash = Hash(self.dex, vm_type)
             self.runtime = Runtime(self.dex, vm_type)
+            self.serialization = Serialization(self.dex, vm_type)
             self.modules = [f for f in self.storage,
                             self.crypto,
                             self.logging,
@@ -78,7 +82,8 @@ class SurgicalAPI(object):
                             self.certkey,
                             self.clipboard,
                             self.bowser,
-                            self.hash
+                            self.hash,
+                            self.serialization
                             ]
 
     def run_surgical(self):
